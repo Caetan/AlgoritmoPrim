@@ -1,0 +1,81 @@
+1. INTRODUCCIÓN
+
+  Este trabajo realizado por los alumnos Alexandre Velo Santórum y Caetán Tojeiro Carpente como solución de la Práctica 4 de la asignatura de Algoritmos, presenta una implementación y posterior estudio de una versión del algoritmo de Prim [Vojtech Jarnik 1930 - Robert C. Prim 1957], parecida a la solución que ofrece el algoritmo de Dijkstra [Edsger Dijkstra 1959], para la búsqueda del árbol expandido mínimo.
+
+  Se parte de un pseudocódigo del algoritmo a implementar y una serie de funciones de generación de matrices dadas. Se pide devolver las aristas que forman el árbol de recubrimiento mínimo en una cola y el peso total. Para dicha cola se realiza una implementación circular en base a vectores. 
+  Este desarrollo se realiza en su totalidad en el lenguaje de programación C.
+  A continuación, se valida el correcto funcionamiento del algoritmo desarrollado. Esta comprobación se realiza mediante 4 test:
+  
+  	- Un test para el primer ejemplo dado
+  	- Un test para el segundo ejemplo dado
+  	- Un test para el tercer ejemplo dado
+  	- Un test con una matriz de adyacencia de tamaño n=10 con valores generados de manera pseudoaleatoria
+
+  Obviamente, el tamaño n de la matriz de adyacencia es el número de nodos de su grafo completo no dirigido, por lo que esta solución que se ofrece sirve para la búsqueda del árbol expandido mínimo de grafos de tamaño máximo 1601 nodos, puesto que la cola en la que se devuelven las aristas del árbol de recubrimiento tiene un tamaño máximo de 1600 elementos.
+  Por último, se hace un estudio de los tiempos de ejecución del algoritmo para matrices (grafos) que aumentan de tamaño siguiendo una progresión geométrica de orden 2.
+
+
+
+2. HARDWARE
+
+  Las características técnicas de la máquina en la que se han ejecutado los algoritmos y sus pruebas son las siguientes:
+
+  - CPU: Intel Core i7-4790K 4.00GHz
+  - Sistema Operativo: Ubuntu 14.04 LTS 64 bits
+  - Memoria RAM: Kingston HyperX Fury Black DDR3 1866MHz de 16GB, con 2 módulos de 8GB CL10
+  - Disco Duro: WD Blue 1TB SATA3 a 7200rpm con Buffer 64 MB Cache
+
+
+
+3. UNIDADES DE TIEMPO
+
+  Las unidades de tiempo en las que se presentan los resultados obtenidos con las ejecuciones del algoritmo son microsegundos.
+  Como mínimo, los resultados se presentan con 3 cifras significativas.
+
+
+
+4. ESTUDIO DE LOS RESULTADOS
+
+  Las sucesivas ejecuciones del algoritmo se realizan siguiendo una progresión geométrica de orden 2 del tamaño de la matriz de adyacencia (grafo). Si se le llama n al tamaño de la matriz de adyacencia (número de nodos del grafo), los valores para los que se ha obtenido un tiempo de ejecución son: n=25, n=50, n=100, n=200, n=400 y n=800. En otras palabras, el tamaño de las entradas de la tabla sigue una progresión geométrica de razón 2, empezando en 25 y con 5 saltos.
+
+  Para el estudio que se realiza a continuación se ha generado una tabla de la forma descrita anteriormente. Se ha realizado la ejecución 2 veces consecutivas con el comando "./'nombre_ejecutable' ; ./'nombre_ejecutable'" y se ha seleccionado como medidas a analizar la tabla con mejores tiempos arrojados.
+
+  Seguidamente se muestra la tabla elegida para el estudio a desarrollar:
+
+              n              t(n)          t(n)/n^1.5            t(n)/n^2          t(n)/n^2.3
+(*)          25          5.448200            0.043586            0.008717            0.003319
+(*)          50         17.240300            0.048763            0.006896            0.002133
+(*)         100         62.801800            0.062802            0.006280            0.001578
+(*)         200        223.545700            0.079035            0.005589            0.001140
+            400        936.000000            0.117000            0.005850            0.000969
+            800       3848.000000            0.170059            0.006012            0.000809
+
+--------------------------------------------------------------------------------------------
+	Intervalo cota ajustada: 0.0059063 (#)
+--------------------------------------------------------------------------------------------
+
+	
+		+ Cota subestimada = n^1.5
+		+ Cota ajustada = n^2
+		+ Cota sobrestimada = n^2.3
+
+	
+	(*) ver apartado 4.1
+	(#) Para obtener el valor del intervalo de la cota ajustada se ha hecho la media de las mediciones para n=100, n=200 y n=400 
+
+
+	4.1 - Estudio de los bucles
+
+	  	Las entradas de la tabla marcadas con el distintivo (*) indican que la medición del tiempo arrojado en un primer momento fue menor a un tiempo t de 500 microsegundos, por lo tanto se realiza un procedimiento especial para dicha medición que consiste en la ejecución del algoritmo repetidamente un número K de veces siendo siempre K una potencia de 10. 
+	  	En este estudio, se ha trabajado con K=10000. A continuación, se hace un promedio de las K medidas tomadas para dar un resultado más ajustado del tiempo de ejecución del algoritmo.
+
+
+	4.2 - Mediciones anómalas
+
+	    Para valores grandes de n, es decir, tamaños de grafos relativamente grandes, las mediciones de tiempo obtenidas no son del todo fiables, por lo que no las tendremos en cuenta para este estudio.
+
+
+
+5. CONCLUSIONES
+
+	Con el estudio empírico realizado, se puede concluir que este algoritmo tiene una complejidad cuadrática, tal y como era de esperar con su estudio teórico.
